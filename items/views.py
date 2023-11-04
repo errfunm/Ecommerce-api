@@ -8,16 +8,21 @@ from rest_framework.reverse import reverse
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication
+
+# from rest_framework_simplejwt import A
 from .permissions import IsCostumer
 from .serializers import *
 import markdown
 from django.contrib.auth.decorators import login_required
-
-# Create your views here.
+from django.contrib.auth import get_user_model, get_user
+from django.conf import settings
+from datetime import datetime, timedelta
 
 
 @api_view(["GET"])
 def api_root(request, format=None):
+    sessions = request.session
+
     return Response(
         {
             "users": reverse("api-root", request=request, format=format),
@@ -26,9 +31,9 @@ def api_root(request, format=None):
     )
 
 
-class UserViewSet(viewsets.ModelViewSet):
+class CustomerViewSet(viewsets.ModelViewSet):
     queryset = Customer.objects.all().order_by("-date_joined")
-    #authentication_classes = [TokenAuthentication]
+    # authentication_classes = [TokenAuthentication]
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
 

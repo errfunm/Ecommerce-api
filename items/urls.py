@@ -7,7 +7,7 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from rest_framework.urlpatterns import format_suffix_patterns
 
 router = DefaultRouter()
-router.register(r"users", UserViewSet, basename="user")
+router.register(r"customer", CustomerViewSet, basename="customer")
 router.register(r"groups", GroupViewSet, basename="group")
 
 urlpatterns = [

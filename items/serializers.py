@@ -10,7 +10,8 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Customer
-        fields = ['shopping_session', 'id', 'username', 'url']
+        fields = ['shopping_session', 'uuid']
+
 
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):

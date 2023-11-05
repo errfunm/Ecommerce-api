@@ -2,7 +2,7 @@ from django.contrib.auth.models import Group
 from .models import Customer
 from rest_framework import serializers
 
-from .models import *
+from models.
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):

@@ -1,5 +1,5 @@
 from .__init__ import *
-from product import *
+from .product import *
 
 
 class ProductInventory(models.Model):

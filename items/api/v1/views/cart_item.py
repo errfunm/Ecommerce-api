@@ -1,6 +1,6 @@
 from .__init__ import *
-from models.cart_item import CartItem
-
+from items.models.cart_item import CartItem
+from items.api.v1.serializers import CartItemSerializer
 
 class CartItemList(generics.ListCreateAPIView):
     queryset = CartItem.objects.all()

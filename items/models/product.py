@@ -1,6 +1,6 @@
 from .__init__ import *
-from category import *
-from brand import *
+from .category import Category
+from .brand import Brand
 
 
 class Product(models.Model):

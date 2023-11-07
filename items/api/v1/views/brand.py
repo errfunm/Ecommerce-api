@@ -1,6 +1,6 @@
 from .__init__ import *
-from models.brand import Brand
-
+from items.models.brand import Brand
+from items.api.v1.serializers import BrandSerializer
 
 class BrandList(generics.ListCreateAPIView):
     queryset = Brand.objects.all()

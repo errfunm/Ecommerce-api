@@ -1,6 +1,6 @@
 from .__init__ import *
-from models.shopping_session import ShoppingSession
-
+from items.models.shopping_session import ShoppingSession
+from items.api.v1.serializers import ShoppingSessionSerializer
 
 class ShoppingSessionList(generics.ListCreateAPIView):
     queryset = ShoppingSession.objects.all()

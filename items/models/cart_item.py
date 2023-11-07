@@ -1,6 +1,6 @@
 from .__init__ import *
-from shopping_session import *
-from product import *
+from .shopping_session import *
+from .product import *
 
 
 class CartItem(models.Model):

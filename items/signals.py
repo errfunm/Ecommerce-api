@@ -1,8 +1,9 @@
 from django.db.models.signals import pre_save, post_save, post_delete
 from django.core.signals import request_finished
 from django.dispatch import receiver
-from .models import Customer
-from .models import ShoppingSession, CartItem, Product
+from items.models.customer import Customer
+from items.models.cart_item import CartItem
+from items.models.shopping_session import ShoppingSession
 
 
 @receiver(post_save, sender=Customer)

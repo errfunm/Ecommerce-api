@@ -1,5 +1,5 @@
 from .__init__ import *
-from customer import *
+from .customer import *
 
 
 class ShoppingSession(models.Model):

@@ -1,6 +1,6 @@
 from .__init__ import *
-from models.image import Image
-
+from items.models.image import Image
+from items.api.v1.serializers import ImageSerializer
 
 class ImageList(generics.ListCreateAPIView):
     queryset = Image.objects.all()

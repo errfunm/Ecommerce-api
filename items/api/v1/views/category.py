@@ -1,6 +1,6 @@
 from .__init__ import *
-from models.category import Category
-
+from items.models.category import Category
+from items.api.v1.serializers import CategorySerializer
 
 class CategoryList(generics.ListCreateAPIView):
     queryset = Category.objects.all()

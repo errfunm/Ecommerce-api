@@ -1,5 +1,4 @@
 from django.urls import path, include
-from rest_framework.routers import DefaultRouter
 from rest_framework.schemas import get_schema_view
 from django.views.generic import TemplateView
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
@@ -9,16 +8,10 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from .views.brand import BrandList, BrandDetail
 from .views.cart_item import CartItemList, CartItemDestroy
 from .views.category import CategoryList, CategoryDetail
-from .views.user import UserViewSet
-from .views.group import GroupViewSet
 from .views.image import ImageList, ImageDetail
 from .views.product import ProductList, ProductDetail
 from .views.shopping_session import ShoppingSessionList, ShoppingSessionDetail
 
-
-router = DefaultRouter()
-router.register(r"User", UserViewSet, basename="customer")
-router.register(r"groups", GroupViewSet, basename="group")
 
 urlpatterns = [
     # path("", api_root, name="api-root"),
@@ -41,5 +34,4 @@ urlpatterns = [
     path(
         "cart_item/delete/<int:pk>", CartItemDestroy.as_view(), name="cart-item-delete"
     ),
-    path("", include(router.urls)),
 ]

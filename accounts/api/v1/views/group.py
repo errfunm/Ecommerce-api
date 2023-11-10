@@ -1,6 +1,6 @@
 from .__init__ import *
 from django.contrib.auth.models import Group
-from items.api.v1.serializers import GroupSerializer
+from accounts.api.v1.serializers import GroupSerializer
 
 
 class GroupViewSet(viewsets.ModelViewSet):

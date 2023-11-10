@@ -1,12 +1,12 @@
 from django.db.models.signals import pre_save, post_save, post_delete
+from django.contrib.auth.models import User
 from django.core.signals import request_finished
 from django.dispatch import receiver
-from items.models.customer import Customer
 from items.models.cart_item import CartItem
 from items.models.shopping_session import ShoppingSession
 
 
-@receiver(post_save, sender=Customer)
+@receiver(post_save, sender=User)
 def create_cart_for_new_user(sender, instance, created, **kwargs):
     if created:
         cart = ShoppingSession.objects.create(user=instance)

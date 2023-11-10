@@ -9,7 +9,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from .views.brand import BrandList, BrandDetail
 from .views.cart_item import CartItemList, CartItemDestroy
 from .views.category import CategoryList, CategoryDetail
-from .views.customer import CustomerViewSet
+from .views.user import UserViewSet
 from .views.group import GroupViewSet
 from .views.image import ImageList, ImageDetail
 from .views.product import ProductList, ProductDetail
@@ -17,13 +17,13 @@ from .views.shopping_session import ShoppingSessionList, ShoppingSessionDetail
 
 
 router = DefaultRouter()
-router.register(r"customer", CustomerViewSet, basename="customer")
+router.register(r"User", UserViewSet, basename="customer")
 router.register(r"groups", GroupViewSet, basename="group")
 
 urlpatterns = [
     # path("", api_root, name="api-root"),
     path("api_schema/", SpectacularAPIView.as_view(), name="api_schema"),
-    path("swagger-ui/", SpectacularSwaggerView.as_view(url_name="api_schema")),
+    path("swagger/", SpectacularSwaggerView.as_view(url_name="api_schema")),
     path("category/", CategoryList.as_view(), name="category-list"),
     path("category/<int:pk>", CategoryDetail.as_view(), name="category-detail"),
     path("image/", ImageList.as_view(), name="image-list"),
@@ -41,5 +41,5 @@ urlpatterns = [
     path(
         "cart_item/delete/<int:pk>", CartItemDestroy.as_view(), name="cart-item-delete"
     ),
-    path("router/", include(router.urls)),
+    path("", include(router.urls)),
 ]

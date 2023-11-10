@@ -1,5 +1,4 @@
-from django.contrib.auth.models import Group
-from items.models.customer import Customer
+from django.contrib.auth.models import Group, User
 from rest_framework import serializers
 
 # models
@@ -8,7 +7,6 @@ from items.models.category import Category
 from items.models.brand import Brand
 from items.models.cart_item import CartItem
 from items.models.shopping_session import ShoppingSession
-from items.models.customer import Customer
 from items.models.image import Image
 
 
@@ -18,8 +16,8 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     )
 
     class Meta:
-        model = Customer
-        fields = ["shopping_session", "uuid"]
+        model = User
+        fields = ["id", "username", "shopping_session"]
 
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):

@@ -14,29 +14,19 @@ def create_cart_for_new_user(sender, instance, created, **kwargs):
 
 
 @receiver(post_save, sender=CartItem)
-def add_to_total(sender, instance, created, **kwargs):
+def total_calculation(sender, instance, created, **kwargs):
+    created_instance = instance
+    price = created_instance.product.price
+    quantity = instance.quantity
+    total = ShoppingSession.objects.get(id=created_instance.shopping_session.id).total
+
     if created:
-        just_created_cart_item = instance
-        price = just_created_cart_item.product.price
-        quantity = instance.quantity
-        total = ShoppingSession.objects.get(
-            id=just_created_cart_item.shopping_session.id
-        ).total
-        total_price = (quantity * price) + total
+        total_price = quantity * price
         ShoppingSession.objects.filter(
-            id__exact=just_created_cart_item.shopping_session.id
+            id__exact=created_instance.shopping_session.id
         ).update(total=total_price)
 
-
-@receiver(post_delete, sender=CartItem)
-def sub_from_total(sender, instance, **kwargs):
-    just_deleted_cart_item = instance
-    price = just_deleted_cart_item.product.price
-    quantity = instance.quantity
-    total = ShoppingSession.objects.get(
-        id=just_deleted_cart_item.shopping_session.id
-    ).total
-    total_price = total - (quantity * price)
+    total_price = quantity * price
     ShoppingSession.objects.filter(
-        id__exact=just_deleted_cart_item.shopping_session.id
+        id__exact=created_instance.shopping_session.id
     ).update(total=total_price)

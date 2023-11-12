@@ -13,6 +13,12 @@ def create_cart_for_new_user(sender, instance, created, **kwargs):
         cart.save()
 
 
+@receiver(post_delete, sender=User)
+def delete_cart_for_deleted_user(sender, instance, **kwargs):
+    cart = ShoppingSession.objects.filter(user=instance)
+    cart.delete()
+
+
 @receiver(post_save, sender=CartItem)
 def total_calculation(sender, instance, created, **kwargs):
     created_instance = instance

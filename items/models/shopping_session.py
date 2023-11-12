@@ -9,4 +9,5 @@ class ShoppingSession(models.Model):
     modified_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.user.username
+        username = str(self.user.username)
+        return username+"'s cart"

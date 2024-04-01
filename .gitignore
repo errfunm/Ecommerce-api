@@ -1,4 +1,6 @@
-.venv
-.vscode
-.idea
-.env
+*.pyc
+.venv/
+.idea/
+.vscode/
+__pycache__/
+migrations/

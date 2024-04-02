@@ -1,4 +1,4 @@
-from .__init__ import *
+from django.db import models
 from mptt.models import MPTTModel, TreeForeignKey
 
 

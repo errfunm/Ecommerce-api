@@ -1,6 +1,5 @@
-from django.db.models.signals import pre_save, post_save, post_delete
+from django.db.models.signals import post_save, post_delete
 from django.contrib.auth.models import User
-from django.core.signals import request_finished
 from django.dispatch import receiver
 from items.models.cart_item import CartItem
 from items.models.shopping_session import ShoppingSession

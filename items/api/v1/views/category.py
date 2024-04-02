@@ -1,5 +1,5 @@
 from .__init__ import *
-from items.models.category import Category
+from items.models import Category
 from items.api.v1.serializers import CategorySerializer
 
 class CategoryList(generics.ListCreateAPIView):

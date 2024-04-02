@@ -5,4 +5,5 @@
 .vscode/
 __pycache__/
 migrations/
+/uploads/*
 db.sqlite3

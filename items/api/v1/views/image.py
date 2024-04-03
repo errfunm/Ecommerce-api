@@ -1,5 +1,5 @@
 from .__init__ import *
-from items.models.image import Image
+from items.models import Image
 from items.api.v1.serializers import ImageSerializer
 
 class ImageList(generics.ListCreateAPIView):

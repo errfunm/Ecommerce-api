@@ -1,5 +1,5 @@
 from .__init__ import *
-from items.models.product import Product
+from items.models import Product
 from items.api.v1.serializers import ProductSerializer
 
 class ProductList(generics.ListCreateAPIView):

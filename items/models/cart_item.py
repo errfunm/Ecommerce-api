@@ -18,11 +18,6 @@ class CartItem(models.Model):
         user_name = self.shopping_session.user.username
         return f"{product_name}-{user_name}"
 
-
-    def save(self, *args, **kwargs):
-        pass
-
-    
     def update_quantity_in_inventory(product_id, change, shop_s=None):
         with transaction.atomic():
             product = Product.objects.get(id=product_id)
@@ -38,7 +33,6 @@ class CartItem(models.Model):
             # Update ProductInventory
             inventory = ProductInventory.objects.get(product=product)
             inventory.quantity -= change
-            print("this is the number:", inventory.quantity)
             if inventory.quantity < 0:
                 raise "error"
 

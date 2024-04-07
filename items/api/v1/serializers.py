@@ -49,6 +49,13 @@ class ShoppingSessionSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class CartItemSerializer(serializers.HyperlinkedModelSerializer):
+    shopping_session = serializers.HyperlinkedRelatedField(
+        label="User's cart",
+        view_name='shoppingsession-detail',
+        read_only=True
+    )
+    product = ProductSerializer()
+
     class Meta:
         model = CartItem
         fields = "__all__"

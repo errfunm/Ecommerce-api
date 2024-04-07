@@ -1,8 +1,6 @@
 from django.db import models
-from .shopping_session import *
-from .product import *
-from .product_inventory import ProductInventory
-from django.db import transaction
+from .shopping_session import ShoppingSession
+from .product import Product
 from django.core.validators import MinValueValidator
 
 
@@ -18,22 +16,5 @@ class CartItem(models.Model):
         user_name = self.shopping_session.user.username
         return f"{product_name}-{user_name}"
 
-    def update_quantity_in_inventory(product_id, change, shop_s=None):
-        with transaction.atomic():
-            product = Product.objects.get(id=product_id)
-            # Update CartItem quantity
-            if shop_s:
-                cart_item = CartItem.objects.get(
-                    shopping_session=shop_s, product=product
-                )
-                cart_item.quantity += change
-                if cart_item.quantity == 0:
-                    cart_item.delete()
-
-            # Update ProductInventory
-            inventory = ProductInventory.objects.get(product=product)
-            inventory.quantity -= change
-            if inventory.quantity < 0:
-                raise "error"
-
-            inventory.save()
+    class Meta:
+        unique_together = [['shopping_session', 'product']]

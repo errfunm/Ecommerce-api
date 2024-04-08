@@ -21,26 +21,21 @@ class BrandSerializer(serializers.HyperlinkedModelSerializer):
         fields = "__all__"
 
 
-class ProductSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Product
-        fields = "__all__"
-
-
-"""class ProductInventorySerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = ProductInventory
-        fields = "__all__"""
-
-
 class ImageSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Image
         fields = "__all__"
 
 
+class ProductSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = Product
+        fields = ["url", "id", "name", "description", "price", "category", "brand", "images"]
+        read_only_fields = ["images"]
+
+
 class ShoppingSessionSerializer(serializers.HyperlinkedModelSerializer):
-    # user = serializers.HyperlinkedRelatedField(User, )
     total = serializers.ReadOnlyField()
 
     class Meta:

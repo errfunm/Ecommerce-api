@@ -44,13 +44,10 @@ class ShoppingSessionSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class CartItemSerializer(serializers.HyperlinkedModelSerializer):
-    shopping_session = serializers.HyperlinkedRelatedField(
-        label="User's cart",
-        view_name='shoppingsession-detail',
-        read_only=True
-    )
-    product = ProductSerializer()
+    product = ProductSerializer(read_only=True)
+    product_id = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all(), source='product', write_only=True)
 
     class Meta:
         model = CartItem
-        fields = "__all__"
+        fields = ["url", "id", "shopping_session", "product", "product_id", "quantity"]
+        read_only_fields = ["shopping_session", "product"]

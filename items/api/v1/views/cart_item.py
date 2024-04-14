@@ -1,7 +1,12 @@
 from .__init__ import *
 from items.models import CartItem
 from items.api.v1.serializers import CartItemSerializer
-from rest_framework import status
+from rest_framework import status, permissions
+
+
+class IsOwner(permissions.BasePermission):
+    def has_object_permission(self, request, view, obj):
+        return obj.shopping_session.user == request.user
 
 
 class CartItemList(generics.ListCreateAPIView):
@@ -36,6 +41,7 @@ class CartItemList(generics.ListCreateAPIView):
 class CartItemDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = CartItem.objects.all()
     serializer_class = CartItemSerializer
+    permission_classes = [IsOwner]
 
     def put(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)

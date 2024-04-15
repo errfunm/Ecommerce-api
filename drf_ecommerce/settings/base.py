@@ -7,7 +7,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 DEBUG = config('DEBUG')
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS')
+ALLOWED_HOSTS_STR = config('ALLOWED_HOSTS')
+ALLOWED_HOSTS = [host.strip() for host in ALLOWED_HOSTS_STR.split(',')]
 
 # Application definition
 

@@ -17,7 +17,6 @@ class CartItemList(generics.ListCreateAPIView):
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.validated_data["shopping_session"] = request.user.cart
         # Check if the item already exists in the cart
         if CartItem.objects.filter(
             shopping_session=request.user.cart,
@@ -28,7 +27,7 @@ class CartItemList(generics.ListCreateAPIView):
         # create the cart item
         self.perform_create(serializer)
 
-        return Response({"message": "Cart item updated/created successfully."}, status.HTTP_201_CREATED)
+        return Response(serializer.data, status.HTTP_201_CREATED)
 
     def perform_create(self, serializer):
         serializer.save(shopping_session=self.request.user.cart)
@@ -47,7 +46,8 @@ class CartItemDetail(generics.RetrieveUpdateDestroyAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid()
         self.update(request, *args, **kwargs)
-        return Response({"message": "Cart item updated successfully."}, status.HTTP_200_OK)
+
+        return Response(serializer.data['quantity'], status.HTTP_200_OK)
 
     def delete(self, request, *args, **kwargs):
         self.destroy(request, *args, **kwargs)

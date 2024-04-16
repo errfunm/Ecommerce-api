@@ -1,0 +1,70 @@
+[
+{
+    "model": "auth.group",
+    "fields": {
+        "name": "customer",
+        "permissions": [
+            [
+                "change_user",
+                "auth",
+                "user"
+            ],
+            [
+                "delete_user",
+                "auth",
+                "user"
+            ],
+            [
+                "view_brand",
+                "items",
+                "brand"
+            ],
+            [
+                "add_cartitem",
+                "items",
+                "cartitem"
+            ],
+            [
+                "change_cartitem",
+                "items",
+                "cartitem"
+            ],
+            [
+                "delete_cartitem",
+                "items",
+                "cartitem"
+            ],
+            [
+                "view_cartitem",
+                "items",
+                "cartitem"
+            ],
+            [
+                "view_category",
+                "items",
+                "category"
+            ],
+            [
+                "view_image",
+                "items",
+                "image"
+            ],
+            [
+                "view_product",
+                "items",
+                "product"
+            ],
+            [
+                "view_productinventory",
+                "items",
+                "productinventory"
+            ],
+            [
+                "view_shoppingsession",
+                "items",
+                "shoppingsession"
+            ]
+        ]
+    }
+}
+]

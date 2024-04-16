@@ -51,3 +51,6 @@ class CartItemSerializer(serializers.HyperlinkedModelSerializer):
         model = CartItem
         fields = ["url", "id", "shopping_session", "product", "product_id", "quantity"]
         read_only_fields = ["shopping_session", "product"]
+
+class CartItemDetailSerializer(serializers.HyperlinkedModelSerializer):
+    pass

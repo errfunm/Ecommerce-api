@@ -1,4 +1,4 @@
-from django.contrib.auth.models import Group, User
+from django.contrib.auth.models import Group, User, Permission
 from rest_framework import serializers
 
 
@@ -19,7 +19,15 @@ class UserDetailSerializer(serializers.HyperlinkedModelSerializer):
         read_only_fields = ["cart", "username"]
 
 
+class PermissionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Permission
+        fields = ('id', 'name')
+
+
 class GroupSerializer(serializers.ModelSerializer):
+    permissions = PermissionSerializer(many=True, read_only=True)
+
     class Meta:
         model = Group
         fields = "__all__"

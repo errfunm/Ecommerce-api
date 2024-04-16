@@ -1,2 +1,2 @@
-from rest_framework import permissions
-from rest_framework import viewsets, status
+from .group import GroupViewSet
+from .user import UserViewSet

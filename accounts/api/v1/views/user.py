@@ -1,4 +1,5 @@
-from .__init__ import *
+from rest_framework import permissions
+from rest_framework import viewsets, status
 from django.contrib.auth.models import User
 from accounts.api.v1.serializers import UserListSerializer, UserDetailSerializer
 from rest_framework.decorators import action

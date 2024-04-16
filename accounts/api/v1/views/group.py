@@ -1,4 +1,5 @@
-from .__init__ import *
+from rest_framework import permissions
+from rest_framework import viewsets
 from django.contrib.auth.models import Group
 from accounts.api.v1.serializers import GroupSerializer
 

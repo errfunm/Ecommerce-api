@@ -1,4 +1,6 @@
-from .__init__ import *
+from rest_framework import generics
+from rest_framework import permissions
+
 from items.models import Brand
 from items.api.v1.serializers import BrandSerializer
 

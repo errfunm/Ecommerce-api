@@ -5,13 +5,7 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from rest_framework.urlpatterns import format_suffix_patterns
 
 # views
-from .views.brand import BrandList, BrandDetail
-from .views.cart_item import CartItemList, CartItemDetail
-from .views.category import CategoryList, CategoryDetail
-from .views.image import ImageList, ImageDetail
-from .views.product import ProductList, ProductDetail
-from .views.shopping_session import ShoppingSessionList, ShoppingSessionDetail
-
+from .views import *
 
 urlpatterns = [
     path("api_schema/", SpectacularAPIView.as_view(), name="api_schema"),

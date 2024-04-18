@@ -9,7 +9,24 @@ class UserListSerializer(serializers.HyperlinkedModelSerializer):
         model = User
         fields = ["id", "username", "cart", "email", "first_name", "last_name", "password"]
         read_only_fields = ["cart"]
-        write_only_fields = ["password"]
+
+
+class RegisterCustomerSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(max_length=128, write_only=True)
+
+    class Meta:
+        model = User
+        fields = ["id", "username", "password"]
+        read_only_fields = ["id"]
+
+    def create(self, validated_data):
+        # Creates new user and adds it to group 'customer'
+        customer_grp = Group.objects.get(name="customer")
+        customer = User(username=validated_data['username'])
+        customer.set_password(validated_data['password'])
+        customer.save()
+        customer.groups.add(customer_grp)
+        return customer
 
 
 class UserDetailSerializer(serializers.HyperlinkedModelSerializer):

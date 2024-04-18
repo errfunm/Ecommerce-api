@@ -1,10 +1,9 @@
-from rest_framework import permissions
-from rest_framework import viewsets, status
 from django.contrib.auth.models import User
-from accounts.api.v1.serializers import UserListSerializer, UserDetailSerializer
+from django.contrib.auth import logout as Logout
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from django.contrib.auth import logout as Logout
+from rest_framework import viewsets, status, permissions
+from accounts.api.v1.serializers import UserListSerializer, UserDetailSerializer, RegisterCustomerSerializer
 
 
 class IsOwner(permissions.BasePermission):
@@ -24,7 +23,7 @@ class UserViewSet(viewsets.ModelViewSet):
         if self.action == "list":
             permission_classes = [permissions.IsAdminUser]
         elif self.action == "create":
-            permission_classes = [permissions.AllowAny]
+            permission_classes = [permissions.IsAdminUser]
         else:
             permission_classes = [IsOwner]
 
@@ -33,6 +32,8 @@ class UserViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.action in ["list", "create"]:
             serializer_class = UserListSerializer
+        elif self.action == "register":
+            serializer_class = RegisterCustomerSerializer
         else:
             serializer_class = UserDetailSerializer
         return serializer_class
@@ -54,3 +55,12 @@ class UserViewSet(viewsets.ModelViewSet):
         Logout(request)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+    @action(methods=["POST"], detail=False, permission_classes=[permissions.AllowAny])
+    def register(self, request):
+        """
+        Customer registration endpoint
+        """
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(status=status.HTTP_201_CREATED)

@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     # installed
     "rest_framework",
     "rest_framework_simplejwt",
+    "rest_framework_simplejwt.token_blacklist",
     "mptt",
     "drf_spectacular",
 ]

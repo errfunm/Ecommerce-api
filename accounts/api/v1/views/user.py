@@ -3,6 +3,7 @@ from django.contrib.auth import logout as Logout
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import viewsets, status, permissions
+from rest_framework_simplejwt.tokens import RefreshToken
 from accounts.api.v1.serializers import UserListSerializer, UserDetailSerializer, RegisterCustomerSerializer
 
 
@@ -62,5 +63,14 @@ class UserViewSet(viewsets.ModelViewSet):
         """
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(status=status.HTTP_201_CREATED)
+        user = serializer.save()
+        refresh = RefreshToken.for_user(user)
+        data = {
+            "token": {
+                "refresh": str(refresh),
+                "access": str(refresh.access_token)
+            },
+            "user": serializer.data
+        }
+        return Response(data=data, status=status.HTTP_201_CREATED)
+ 

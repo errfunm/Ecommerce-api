@@ -5,7 +5,11 @@ from django.core.validators import MinValueValidator
 
 
 class CartItem(models.Model):
-    shopping_session = models.ForeignKey(ShoppingSession, on_delete=models.CASCADE, verbose_name="user's cart")
+    shopping_session = models.ForeignKey(
+        ShoppingSession,
+        on_delete=models.CASCADE,
+        verbose_name="user's cart",
+        related_name="cart_items")
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1, validators=[MinValueValidator(1)])
     created_at = models.DateTimeField(auto_now_add=True)

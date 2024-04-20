@@ -35,14 +35,6 @@ class ProductSerializer(serializers.HyperlinkedModelSerializer):
         read_only_fields = ["images"]
 
 
-class ShoppingSessionSerializer(serializers.HyperlinkedModelSerializer):
-    total = serializers.ReadOnlyField()
-
-    class Meta:
-        model = ShoppingSession
-        fields = "__all__"
-
-
 class CartItemSerializer(serializers.HyperlinkedModelSerializer):
     product = ProductSerializer(read_only=True)
     product_id = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all(), source='product', write_only=True)
@@ -52,5 +44,9 @@ class CartItemSerializer(serializers.HyperlinkedModelSerializer):
         fields = ["url", "id", "shopping_session", "product", "product_id", "quantity"]
         read_only_fields = ["shopping_session", "product"]
 
-class CartItemDetailSerializer(serializers.HyperlinkedModelSerializer):
-    pass
+class ShoppingSessionSerializer(serializers.HyperlinkedModelSerializer):
+    cart_items = CartItemSerializer(many=True)
+    
+    class Meta:
+        model = ShoppingSession
+        fields = ["cart_items", "total"]

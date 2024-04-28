@@ -5,3 +5,4 @@ from .image import Image
 from .product_inventory import ProductInventory
 from .product import Product
 from .shopping_session import ShoppingSession
+from .discount import Discount

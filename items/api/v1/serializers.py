@@ -31,7 +31,8 @@ class ProductSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Product
-        fields = ["url", "id", "name", "description", "price", "category", "brand", "images"]
+        fields = ["url", "id", "name", "description", "price", "selling_price",
+                  "discount_percent", "category", "brand", "images"]
         read_only_fields = ["images"]
 
 
@@ -44,9 +45,10 @@ class CartItemSerializer(serializers.HyperlinkedModelSerializer):
         fields = ["url", "id", "shopping_session", "product", "product_id", "quantity"]
         read_only_fields = ["shopping_session", "product"]
 
+
 class ShoppingSessionSerializer(serializers.HyperlinkedModelSerializer):
     cart_items = CartItemSerializer(many=True)
     
     class Meta:
         model = ShoppingSession
-        fields = ["cart_items", "total"]
+        fields = ["cart_items", "total_price", "total_price_with_discount"]

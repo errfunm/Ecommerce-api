@@ -1,12 +1,16 @@
 from rest_framework import serializers
 
 # models
-from items.models.product import Product
-from items.models.category import Category
-from items.models.brand import Brand
-from items.models.cart_item import CartItem
-from items.models.shopping_session import ShoppingSession
-from items.models.image import Image
+from items.models import (
+    Product,
+    Category,
+    Brand,
+    CartItem,
+    ShoppingSession,
+    Image,
+    Order,
+    OrderItem
+)
 
 
 class CategorySerializer(serializers.HyperlinkedModelSerializer):
@@ -52,3 +56,29 @@ class ShoppingSessionSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = ShoppingSession
         fields = ["cart_items", "total_price", "total_price_with_discount"]
+
+
+class OrderItemListSerializer(serializers.ModelSerializer):
+    product_id = serializers.PrimaryKeyRelatedField(source='product', read_only=True)
+    order_id = serializers.PrimaryKeyRelatedField(source='order', read_only=True)
+
+    class Meta:
+        model = OrderItem
+        fields = ('id', 'order_id', 'product_id', 'quantity', 'created_at')
+
+
+class OrderListSerializer(serializers.ModelSerializer):
+    customer_id = serializers.PrimaryKeyRelatedField(source='customer', read_only=True)
+
+    class Meta:
+        model = Order
+        fields = ('id', 'customer_id', 'payable_price', 'status', 'created_at', 'updated_at')
+
+
+class OrderDetailSerializer(serializers.ModelSerializer):
+    items = OrderItemListSerializer(many=True)
+    customer_id = serializers.PrimaryKeyRelatedField(source='customer', read_only=True)
+
+    class Meta:
+        model = Order
+        fields = ('id', 'customer_id', 'payable_price', 'status', 'created_at', 'updated_at', 'items')

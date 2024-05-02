@@ -1,11 +1,8 @@
-from django.urls import path, include
-from rest_framework.schemas import get_schema_view
-from django.views.generic import TemplateView
+from django.urls import path
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
-from rest_framework.urlpatterns import format_suffix_patterns
 
 # views
-from .views import *
+from items.api.v1.views import *
 
 urlpatterns = [
     path("api_schema/", SpectacularAPIView.as_view(), name="api_schema"),
@@ -29,5 +26,10 @@ urlpatterns = [
 
     path('cart/', CustomerCart.as_view(), name="customer-cart"),
     path('cart/add/<int:product_id>', add_to_cart, name="add-to-cart"),
-    path('cart/remove/<int:cart_item_id>', remove_from_cart, name="remove-from-cart")
+    path('cart/remove/<int:cart_item_id>', remove_from_cart, name="remove-from-cart"),
+
+    path("orders/", OrderListView.as_view(), name="order-list"),
+    path("orders/<int:pk>", OrderDetailView.as_view(), name="order-detail"),
+    path('orders/create/', create_order, name="order-create"),
+    path('orders/payment/verify', payment_verify, name='payment-verify')
 ]

@@ -1,5 +1,6 @@
 from django.db import models
-from .product import *
+from .product import Product
+from items.exceptions import OutOfStock
 
 
 class ProductInventory(models.Model):
@@ -8,7 +9,7 @@ class ProductInventory(models.Model):
         related_name="inventory",
         on_delete=models.CASCADE,
     )
-    quantity = models.IntegerField()
+    quantity = models.PositiveSmallIntegerField(default=1)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
 
@@ -16,5 +17,11 @@ class ProductInventory(models.Model):
         verbose_name_plural = "product inventories"
 
     def __str__(self) -> str:
-        product_name = self.product.name
-        return product_name
+        return f"{self.product} x {self.quantity}"
+
+    def save(self, **kwargs):
+        if self.quantity < 0:
+            raise OutOfStock(
+                f"Not enough items in stock for product: {self.product}"
+            )
+        return super().save()

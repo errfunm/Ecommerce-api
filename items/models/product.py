@@ -7,7 +7,7 @@ from .discount import Discount
 class Product(models.Model):
     name = models.CharField(max_length=30)
     description = models.TextField(max_length=300)
-    price = models.DecimalField(max_digits=12, decimal_places=0)
+    price = models.PositiveIntegerField()
     discounts = models.ManyToManyField(Discount, related_name="products",)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
@@ -20,7 +20,7 @@ class Product(models.Model):
         price = self.price
         for discount in discounts:
             price = price - (self.price * discount.value)
-        return price
+        return int(price)
 
     @property
     def discount_percent(self):

@@ -55,7 +55,7 @@ class ShoppingSessionSerializer(serializers.HyperlinkedModelSerializer):
     
     class Meta:
         model = ShoppingSession
-        fields = ["cart_items", "total_price", "total_price_with_discount"]
+        fields = ["cart_items", "total_price", "total_price_with_discount", "total_items_quantity"]
 
 
 class OrderItemListSerializer(serializers.ModelSerializer):

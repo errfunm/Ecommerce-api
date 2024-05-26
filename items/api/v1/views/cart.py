@@ -12,9 +12,9 @@ class CustomerCart(ListAPIView):
     queryset = ShoppingSession.objects.all()
     permission_classes = [permissions.IsAuthenticated]
 
-    
     def get_queryset(self):
         return self.queryset.filter(user=self.request.user)
+
 
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])  
@@ -35,6 +35,7 @@ def add_to_cart(request, product_id):
     }
     return Response(data=data, status=status.HTTP_200_OK)
 
+
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def remove_from_cart(request, cart_item_id):
@@ -50,3 +51,10 @@ def remove_from_cart(request, cart_item_id):
     else:
         cart_item.delete()
         return Response({"deleted": True, "quantity": 0}, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+#@permission_classes([permissions.IsAuthenticated])
+def cart_total_quantity(request, cart_id):
+    cart = ShoppingSession.objects.get(id=cart_id)
+    return Response(data={"total_quantity": cart.total_items_quantity}, status=status.HTTP_200_OK)

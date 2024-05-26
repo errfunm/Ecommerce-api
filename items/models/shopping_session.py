@@ -23,6 +23,14 @@ class ShoppingSession(models.Model):
             total_with_discount += item.quantity * item.product.selling_price
         return total_with_discount
 
+    @property
+    def total_items_quantity(self):
+        """ returns total number of items in the shopping session"""
+        quantity_sum = 0
+        for item in self.cart_items.all():
+            quantity_sum += item.quantity
+        return quantity_sum
+
     def __str__(self):
         username = str(self.user.username)
         return username+"'s cart"

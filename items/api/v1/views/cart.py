@@ -54,7 +54,7 @@ def remove_from_cart(request, cart_item_id):
 
 
 @api_view(['GET'])
-#@permission_classes([permissions.IsAuthenticated])
-def cart_total_quantity(request, cart_id):
-    cart = ShoppingSession.objects.get(id=cart_id)
+@permission_classes([permissions.IsAuthenticated])
+def cart_total_quantity(request):
+    cart = request.user.cart
     return Response(data={"total_quantity": cart.total_items_quantity}, status=status.HTTP_200_OK)
